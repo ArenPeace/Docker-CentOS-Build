@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source ~/.bashrc
+mkdir build
+set -e
+cd build
+cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Release} ..
+make VERBOSE=1
