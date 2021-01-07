@@ -1,6 +1,7 @@
-# Docker-CentOS-Build
-a docker CentOS build environment
-用于同一开发人员的编译环境
+# HandDocker
+汇集一个后台程序员需要用到的docker，用于解决后台Cpp/Golang项目快速开发、编译、部署、升级。
+
+
 
 ### 制作镜像
 `make image`
