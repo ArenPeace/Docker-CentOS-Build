@@ -6,6 +6,8 @@ set(CMAKE_C_FLAGS "-Wall -D_FILE_OFFSET_BITS=64 -D_LARGE_FILE -D_LARGEFILE_SOURC
 set(CMAKE_EXE_LINKER_FLAGS "-L/opt/local/lib ${CMAKE_EXE_LINKER_FLAGS}")
 
 aux_source_directory(. SOURCES)
+
 add_executable(${PROJECT_NAME} ${SOURCES})
-target_link_libraries("${PROJECT_NAME}" 
+
+target_link_libraries(${PROJECT_NAME}
 	pthread ssl crypto json-c zlog z curl pthread)

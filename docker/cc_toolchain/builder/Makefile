@@ -1,6 +1,6 @@
 .PHONY: all image clean
 
-DOCKER_IMAGE_NAME ?= build-libs
+DOCKER_IMAGE_NAME ?= cc-builder
 DOCKER_IMAGE_TAG ?= master
 DOCKER_IMAGE=${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
 
