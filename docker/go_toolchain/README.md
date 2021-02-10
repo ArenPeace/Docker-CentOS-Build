@@ -13,7 +13,8 @@ protoc --go_out=./go1/ ./proto/my.proto
 protoc --go_out=plugins=grpc:./go2/  ./proto/my.proto
 ```
 
-## trouble
+## --go_out: protoc-gen-go: plugins are not supported; use 'protoc --go-grpc_out=...' to generate gRPC
+
 
 
 ## 引用
