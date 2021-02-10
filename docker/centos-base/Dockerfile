@@ -21,31 +21,40 @@ RUN yum -y update &&\
 RUN mkdir /build
 WORKDIR /build
 
-#RUN echo $'export CC=gcc\n\
-#    export CXX=g++\n\
-#    export LDFLAGS="-L/opt/local/lib"\n\
-#    export CFLAGS="-Wall "\n\
-#    export CXXFLAGS="-Wall "\n\
-#    export CMAKE_C_FLAGS_RELEASE="-s"\n\
-#    export CMAKE_CXX_FLAGS_RELEASE="-s"' > /opt/centos-build.env
-#RUN echo source /opt/centos-build.env >> ~/.bashrc
+# cc Setup
+RUN echo $'export CC=gcc \n\
+export CXX=g++ \n\
+export LDFLAGS="-L/opt/local/lib" \n\
+export CFLAGS="-Wall" \n\
+export CXXFLAGS="-Wall" \n\
+export CMAKE_C_FLAGS_RELEASE="-s" \n\
+export CMAKE_CXX_FLAGS_RELEASE="-s"' > /opt/centos-base.env
+RUN echo source /opt/centos-base.env >> ~/.bashrc
 
 RUN mkdir /root/.ssh &&\
     ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -P ""
-ADD build-cmake /opt/build-cmake
 
-#cmake install
+#cmake Setup
 COPY cmake.Makefile /build/
 RUN ["/bin/bash", "-c", "source ~/.bashrc; make -C /build/ -f cmake.Makefile install clean"]
 
-#yasm
+#yasm Setup
 COPY yasm.Makefile /build/
 #ADD yasm /build/yasm
 RUN ["/bin/bash", "-c", "source ~/.bashrc; make -C /build/ -f yasm.Makefile install clean"]
 
+# go1.13 Setup
+COPY go113.Makefile /build/
+RUN ["/bin/bash", "-c", "source ~/.bashrc; make -C /build/ -f go113.Makefile install clean"]
+RUN echo $'export GOROOT="/usr/local/go113" \n\
+export GOPATH=~/go \n\
+export PATH="$GOROOT/bin:$GOPATH/bin:$PATH" \n\
+export GO111MODULE=on' > /opt/go113-base.env
+RUN echo source /opt/go113-base.env >> ~/.bashrc
 
+# entry Setup
 WORKDIR /build
 
-ADD build-cmake /opt/build-cmake
+ADD pipeline /opt/pipeline
 
-ENTRYPOINT ["/opt/build-cmake"]
+ENTRYPOINT ["/opt/pipeline"]
