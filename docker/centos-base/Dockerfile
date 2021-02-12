@@ -13,10 +13,11 @@ RUN yum clean all
 RUN yum makecache
 
 RUN yum -y update &&\
-	yum install -y gcc gcc-c++ cmake \
-		git wget make yasm.x86_64 \
-		pkg-config autoconf automake \
-		libtool vim curl
+	yum -y groupinstall development && \
+	yum install -y gcc gcc-c++ cmake git wget make yasm.x86_64 \
+		pkg-config autoconf automake libtool vim curl \
+		zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel \
+		readline-devel tk-devel
 
 RUN mkdir /build
 WORKDIR /build
@@ -51,6 +52,10 @@ export GOPATH=~/go \n\
 export PATH="$GOROOT/bin:$GOPATH/bin:$PATH" \n\
 export GO111MODULE=on' > /opt/go113-base.env
 RUN echo source /opt/go113-base.env >> ~/.bashrc
+
+# python3 Setup
+COPY py3.Makefile /build/
+RUN ["/bin/bash", "-c", "source ~/.bashrc; make -C /build/ -f py3.Makefile install clean"]
 
 # entry Setup
 WORKDIR /build
