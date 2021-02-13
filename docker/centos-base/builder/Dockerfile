@@ -50,6 +50,7 @@ RUN ["/bin/bash", "-c", "source ~/.bashrc; make -C /build/ -f go113.Makefile ins
 RUN echo $'export GOROOT="/usr/local/go113" \n\
 export GOPATH=~/go \n\
 export PATH="$GOROOT/bin:$GOPATH/bin:$PATH" \n\
+export GOPROXY="https://goproxy.io,direct" \n\
 export GO111MODULE=on' > /opt/go113-base.env
 RUN echo source /opt/go113-base.env >> ~/.bashrc
 
