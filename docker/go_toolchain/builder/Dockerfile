@@ -1,9 +1,8 @@
 FROM centos-base:master
 
 # Go Setup
-RUN echo $'export GOPROXY="https://goproxy.io,direct" \n\
-export GOPRIVATE=git.garena.com' > /opt/go113-builder.env
-RUN echo source /opt/go113-builder.env >> ~/.bashrc
+#RUN echo $'export GOPRIVATE=path.to.private' > /opt/go113-builder.env
+#RUN echo source /opt/go113-builder.env >> ~/.bashrc
 
 RUN source ~/.bashrc
 
