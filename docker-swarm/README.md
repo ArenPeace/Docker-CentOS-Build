@@ -1,4 +1,6 @@
 # docker-swarm
+参考：http://c.biancheng.net/view/3168.html
+
 Docker Swarm 是 Docker 的集群管理工具.
 
 
