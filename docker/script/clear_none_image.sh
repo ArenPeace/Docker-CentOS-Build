@@ -13,7 +13,7 @@ do
 	docker rm $i
 done
 
-for i in `docker image list|grep none|awk '{print $3}'`;
+for i in `docker image list -a|grep none|awk '{print $3}'`;
 do
 	echo $i
 	docker rmi $i
