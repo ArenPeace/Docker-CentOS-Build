@@ -1,5 +1,5 @@
 # autobuild
-自动编译
+自动化编译
 
 ## makefile
 
