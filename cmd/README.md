@@ -4,6 +4,11 @@
 
 ## hh
 hh命令，hand-helper/help-hand/short-hand，快捷命令。
-
+```shell script
+# install
+go get git.garena.com/ziqiang.ren/handtool/cmd/hh
+# 生成分表sql
+hh depart -f a.sql -s 199
+```
 已支持：
 + 数据库8零分表
