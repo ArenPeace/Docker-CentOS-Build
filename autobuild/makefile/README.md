@@ -1,7 +1,44 @@
-# makefile
+# Makefile
+
+## 速记用法
 ```makefile
 @               # 放在行首，表示不打印此行
+:=              # 立即赋值，按makefile中的先后顺序赋值（一般使用）
+=               # 延迟赋值，执行时赋值
 ```
+```shell
+a=bb make target1 target2 a=cc b=dd
+# a=cc b=dd是命令行赋值；a=bb是环境变量赋值；target1 target2是编译目标；
+# 命令行赋值更优先
+# 命令行变量放在${MAKEOVERRIDES}中，编译目标放在${MAKECMDGOALS}
+ifeq ($(filter test1, $(MAKECMDGOALS)), test1)
+    do something here
+    # 常用来把一些变量赋值放到目标相关的代码块中
+    # 在执行特定的目标时，不去执行无关的代码块
+    # 以大幅提升大型 Makefile 的执行效率
+endif
+
+ifeq ($(origin a), command line) # 没有命令行参数a，也可用 findstring MAKEOVERRIDES
+    do something here
+endif 
+
+```
+## debug & log
+```shell
+make --debug target0 # 展开make解析和执行过程
+make --trace target0 # 展开make执行过程
+
+# 打印日志
+## $(log abc)
+## $(warning abc)
+## $(error abc) # 打印日志后退出
+
+# environment dumping
+make -p xxx > xxx.data.dump # ?查看变量，-n - 不实际执行
+```
+
+## := 与 = 的区别
+Makefile 中所有变量赋值的语句在所有 target 之前完成，跟变量赋值与 target 的相对位置无关。
 
 ## 内置环境变量
 ```makefile
@@ -96,6 +133,7 @@ $(word N,text)  # 从text中获取第n个单词
 $(wordlist s,e,text)    # 从text取出从s到e的子集（闭区间，且从1计数）
 $(words text)   # 统计单词数目，最后一个单词：$(word $(words text),text)
 $(firstword names...)   # 取首个单词
+$(empty) # 空格
 
 # 目录处理函数
 $(dir names...) # 取目录，并去重：如src/file.a test.txt => src/ ./
@@ -213,4 +251,12 @@ vpath pattern   # 清除为pattern的文件设置的搜索目录
 vpath   # 清楚所有设置的搜索目录
 ```
 
+## 其他
+```makefile
+# 修改默认编译目标
+.DEFAULT_GOAL := abc
+abc:
 
+
+ 
+```

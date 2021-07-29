@@ -19,9 +19,7 @@ target: ${PB_GO_FILES} ./docs/apidoc.html
 
 $(PB_GO_FILES):./go/%.pb.go:./proto/%.proto
 	protoc -I=${GOPATH}/src -I=${GOPATH}/src/github.com/gogo/protobuf/protobuf -I=./proto/ \
-	--go_out=./go --govalidators_out=./go/ $^ && \
-	protoc -I=${GOPATH}/src -I=${GOPATH}/src/github.com/gogo/protobuf/protobuf -I=./proto/ \
-	--go-grpc_out=./go/ --govalidators_out=./go/ $^
+	--go_out=./go --go-grpc_out=./go/ --govalidators_out=./go/ $^
 
 ./docs/apidoc.html:${PROTO_FILES}
 	protoc --doc_out=../docs --doc_opt=html,apidoc.html $^
